@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:jaxws="http://cxf.apache.org/jaxws"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://cxf.apache.org/jaxws 
+http://cxf.apache.org/schemas/jaxws.xsd
+">
+	<!-- 引入属性文件 -->
+	<context:property-placeholder location="classpath:config.properties" />
+	<!-- 自动扫描(自动注入) -->
+	<context:component-scan base-package="com.jk.service" />
+	
+	 <import resource="classpath:META-INF/cxf/cxf.xml" />
+     <bean id="cxfImpl" class="com.jk.service.AreaServiceImpl" />
+
+    <!-- webservice 访问地址        http://localhost:8080/webservice-server/webservice  -->
+    <jaxws:server serviceClass="com.jk.service.AreaService"  address="/cxfTest">
+        <jaxws:serviceBean>
+            <ref bean="cxfImpl" />
+        </jaxws:serviceBean>
+    </jaxws:server>	
+	
+</beans>
